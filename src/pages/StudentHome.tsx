@@ -47,18 +47,18 @@ export const StudentHome: React.FC = () => {
 
   const getRushColors = (level: string) => {
     switch (level) {
-      case 'relaxed': return 'bg-gradient-to-br from-status-relaxed to-[#5A7A5D] text-white border-none shadow-lg shadow-status-relaxed/30';
-      case 'busy': return 'bg-gradient-to-br from-status-busy to-[#B3802A] text-white border-none shadow-lg shadow-status-busy/30';
-      case 'jammed': return 'bg-gradient-to-br from-status-jammed to-maroon-dark text-white border-none shadow-lg shadow-status-jammed/30';
+      case 'relaxed': return 'bg-gradient-to-br from-status-relaxed/90 to-status-relaxed/70 text-white backdrop-blur-xl border border-white/40 shadow-[0_20px_40px_-10px_rgba(74,222,128,0.4)]';
+      case 'busy': return 'bg-gradient-to-br from-status-busy/90 to-status-busy/70 text-white backdrop-blur-xl border border-white/40 shadow-[0_20px_40px_-10px_rgba(251,191,36,0.4)]';
+      case 'jammed': return 'bg-gradient-to-br from-status-jammed/90 to-status-jammed/70 text-white backdrop-blur-xl border border-white/40 shadow-[0_20px_40px_-10px_rgba(248,113,113,0.4)]';
       default: return 'bg-glass-fill text-text-dark';
     }
   };
   
   const getRushIcon = (level: string) => {
     switch (level) {
-      case 'relaxed': return <Coffee className="w-10 h-10 text-white" />;
-      case 'busy': return <Flame className="w-10 h-10 text-white" />;
-      case 'jammed': return <Zap className="w-10 h-10 text-white" />;
+      case 'relaxed': return <Coffee className="w-10 h-10 text-white drop-shadow-md" />;
+      case 'busy': return <Flame className="w-10 h-10 text-white drop-shadow-md" />;
+      case 'jammed': return <Zap className="w-10 h-10 text-white drop-shadow-md" />;
       default: return null;
     }
   };
@@ -81,30 +81,38 @@ export const StudentHome: React.FC = () => {
 
   return (
     <div className="min-h-screen p-6 pb-24 relative overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-maroon/5 rounded-full blur-[80px] -z-10" />
-      <div className="absolute bottom-40 left-0 w-64 h-64 bg-[#D9A441]/5 rounded-full blur-[80px] -z-10" />
+      {/* Background Ambience Spatial Orbs */}
+      <motion.div 
+        animate={{ scale: [1, 1.1, 1], rotate: [0, 90, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-maroon-light/30 rounded-full blur-[100px] -z-10" 
+      />
+      <motion.div 
+        animate={{ scale: [1, 1.2, 1], rotate: [0, -90, 0] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        className="absolute bottom-20 left-[-10%] w-96 h-96 bg-maroon/20 rounded-full blur-[100px] -z-10" 
+      />
 
-      <header className="flex justify-between items-center mb-10 mt-4">
+      <header className="flex justify-between items-center mb-10 mt-4 relative z-10">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-          <p className="text-sm text-text-muted font-medium mb-1">{getGreeting()}</p>
-          <h1 className="text-4xl font-bold font-heading text-maroon-dark">{profile?.name?.split(' ')[0] || 'Student'}</h1>
+          <p className="text-sm text-text-muted font-medium mb-1 drop-shadow-sm">{getGreeting()}</p>
+          <h1 className="text-4xl font-bold font-heading text-text-dark drop-shadow-md">{profile?.name?.split(' ')[0] || 'Student'}</h1>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-3">
           {profile?.photoUrl ? (
-            <img src={profile.photoUrl} alt="Profile" className="w-12 h-12 rounded-2xl border-2 border-white shadow-md object-cover" />
+            <img src={profile.photoUrl} alt="Profile" className="w-12 h-12 rounded-2xl border-2 border-white shadow-lg object-cover" />
           ) : (
-            <div className="w-12 h-12 bg-white rounded-2xl border-2 border-glass-border flex items-center justify-center font-bold text-xl text-maroon shadow-sm rotate-3">
+            <div className="w-12 h-12 bg-white rounded-2xl border border-glass-border flex items-center justify-center font-bold text-xl text-maroon shadow-lg rotate-3 backdrop-blur-md">
               {profile?.name?.charAt(0) || 'U'}
             </div>
           )}
-          <Button onClick={() => signOut(auth)} variant="ghost" size="sm" className="!p-2 bg-white/50 backdrop-blur-sm rounded-xl">
+          <Button onClick={() => signOut(auth)} variant="secondary" size="sm" className="!p-2">
             <LogOut className="w-5 h-5 text-text-muted hover:text-maroon transition-colors" />
           </Button>
         </motion.div>
       </header>
 
-      <BentoGrid>
+      <BentoGrid className="relative z-10">
         {/* Live Rush Meter (Largest Tile) */}
         <BentoItem colSpan={4} rowSpan={1}>
           <motion.div 
@@ -113,7 +121,7 @@ export const StudentHome: React.FC = () => {
           >
             {/* Liquid Background Animation */}
             <motion.div 
-              className="absolute inset-0 opacity-20 bg-white mix-blend-overlay"
+              className="absolute inset-0 opacity-30 bg-white mix-blend-overlay"
               animate={{ 
                 y: ["0%", "-10%", "0%"],
                 x: ["0%", "5%", "0%"],
@@ -126,12 +134,12 @@ export const StudentHome: React.FC = () => {
             <div className="relative z-10 flex justify-between items-center h-full">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                  <p className="text-xs font-bold uppercase tracking-widest text-white/80">Live Kiosk Status</p>
+                  <div className="w-2 h-2 rounded-full bg-white animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                  <p className="text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-sm">Live Status</p>
                 </div>
-                <h2 className="text-4xl font-bold font-heading">{getRushText(rushMeter.level)}</h2>
+                <h2 className="text-4xl font-bold font-heading drop-shadow-md">{getRushText(rushMeter.level)}</h2>
               </div>
-              <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-md border border-white/20 rotate-[-5deg]">
+              <div className="bg-white/30 p-4 rounded-3xl backdrop-blur-lg border border-white/40 shadow-xl rotate-[-5deg] hover:rotate-0 transition-transform duration-500">
                 {getRushIcon(rushMeter.level)}
               </div>
             </div>
@@ -143,17 +151,17 @@ export const StudentHome: React.FC = () => {
           <GlassCard 
             interactive 
             onClick={() => navigate('/menu')}
-            className="h-full p-6 flex flex-col justify-between bg-gradient-to-br from-maroon to-maroon-dark border-none shadow-xl shadow-maroon/20 text-white group overflow-hidden"
+            className="h-full p-6 flex flex-col justify-between bg-gradient-to-br from-maroon to-maroon-dark border-none shadow-[0_20px_40px_-10px_rgba(204,72,60,0.5)] text-white group overflow-hidden"
           >
-            <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
+            <div className="absolute top-[-20%] right-[-20%] w-40 h-40 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
             
-            <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/20 mb-4 z-10">
-              <Coffee className="w-7 h-7 text-white" />
+            <div className="w-14 h-14 bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-lg border border-white/30 mb-4 z-10 shadow-lg">
+              <Coffee className="w-7 h-7 text-white drop-shadow-md" />
             </div>
             <div className="z-10">
-              <h3 className="text-3xl font-bold font-heading mb-2">Menu</h3>
-              <p className="text-sm text-white/80 mb-6 leading-relaxed">Order solo or start a group cart with friends</p>
-              <div className="inline-flex items-center gap-2 text-sm font-bold bg-white/20 px-4 py-2 rounded-xl backdrop-blur-md">
+              <h3 className="text-3xl font-bold font-heading mb-2 drop-shadow-md">Menu</h3>
+              <p className="text-sm text-white/90 mb-6 leading-relaxed">Order your favorites with just a few taps.</p>
+              <div className="inline-flex items-center gap-2 text-sm font-bold bg-white/30 px-4 py-2 rounded-2xl backdrop-blur-md shadow-lg border border-white/20">
                 Browse
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
@@ -166,46 +174,46 @@ export const StudentHome: React.FC = () => {
           <GlassCard 
             interactive={activeOrdersCount > 0}
             onClick={() => { if (activeOrderId) navigate(`/order/${activeOrderId}`); }}
-            className="h-full p-5 flex flex-col justify-center bg-white/60 hover:bg-white/80 transition-colors"
+            className="h-full p-5 flex flex-col justify-center"
           >
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-xl font-heading leading-tight text-maroon-dark">Active<br/>Orders</h3>
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold shadow-md ${activeOrdersCount > 0 ? 'bg-[#5A7A5D] animate-pulse' : 'bg-black/20'}`}>
+              <h3 className="font-bold text-xl font-heading leading-tight text-text-dark">Active<br/>Orders</h3>
+              <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg ${activeOrdersCount > 0 ? 'bg-status-relaxed animate-[pulse_2s_ease-in-out_infinite]' : 'bg-text-muted/30'}`}>
                 {activeOrdersCount}
               </div>
             </div>
             <p className="text-sm text-text-muted font-medium mt-1">
-              {activeOrdersCount > 0 ? 'Your coffee is brewing!' : 'No orders in queue.'}
+              {activeOrdersCount > 0 ? 'Your order is in the works!' : 'No orders in queue.'}
             </p>
           </GlassCard>
         </BentoItem>
 
         {/* Loyalty Punch Card */}
         <BentoItem colSpan={2} rowSpan={1}>
-          <GlassCard interactive onClick={() => navigate('/loyalty')} className="h-full p-5 flex flex-col justify-center bg-white/60 hover:bg-white/80 transition-colors">
+          <GlassCard interactive onClick={() => navigate('/loyalty')} className="h-full p-5 flex flex-col justify-center">
             <div className="flex justify-between items-start mb-3">
-              <h3 className="font-bold text-xl font-heading leading-tight text-maroon-dark">Loyalty<br/>Rewards</h3>
-              <div className="bg-maroon text-white font-bold px-3 py-1.5 rounded-lg text-sm shadow-md">
+              <h3 className="font-bold text-xl font-heading leading-tight text-text-dark">Loyalty<br/>Rewards</h3>
+              <div className="bg-maroon-light/30 text-maroon font-bold px-3 py-1.5 rounded-xl text-sm border border-maroon-light/50">
                 {profile?.loyalty.coffee || 0}/5
               </div>
             </div>
             <div className="flex gap-1.5 mt-2">
               {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className={`flex-1 h-2.5 rounded-full ${i <= (profile?.loyalty.coffee || 0) ? 'bg-maroon shadow-sm' : 'bg-black/10'}`} />
+                <div key={i} className={`flex-1 h-2.5 rounded-full ${i <= (profile?.loyalty.coffee || 0) ? 'bg-maroon shadow-[0_0_10px_rgba(204,72,60,0.5)]' : 'bg-black/5 inset-shadow-sm'}`} />
               ))}
             </div>
           </GlassCard>
         </BentoItem>
 
         {/* Khata / Monthly Pass */}
-        <BentoItem colSpan={2} rowSpan={1}>
-          <GlassCard interactive onClick={() => navigate('/pass')} className="h-full p-5 flex items-center justify-between bg-white/60 hover:bg-white/80 transition-colors">
+        <BentoItem colSpan={4} rowSpan={1}>
+          <GlassCard interactive onClick={() => navigate('/pass')} className="h-full p-5 flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-xl font-heading text-maroon-dark mb-1">Pass</h3>
-              <p className="text-sm font-medium text-text-muted">₹{profile?.khata.due || 0} due</p>
+              <h3 className="font-bold text-2xl font-heading text-text-dark mb-1">Store Pass</h3>
+              <p className="text-sm font-medium text-text-muted">₹{profile?.khata.due || 0} due balance</p>
             </div>
-            <div className="w-12 h-12 bg-gradient-to-br from-[#D9A441] to-[#B3802A] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#D9A441]/20 rotate-3">
-              <Droplets className="w-6 h-6" />
+            <div className="w-14 h-14 bg-gradient-to-br from-status-busy to-orange-400 rounded-3xl flex items-center justify-center text-white shadow-[0_10px_20px_-10px_rgba(251,191,36,0.6)] rotate-3 hover:rotate-6 transition-transform">
+              <Droplets className="w-7 h-7 drop-shadow-md" />
             </div>
           </GlassCard>
         </BentoItem>

@@ -90,24 +90,25 @@ export const Menu: React.FC = () => {
       {/* Floating Cart Summary */}
       {cartItems.length > 0 && (
         <motion.div 
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          initial={{ y: 100, opacity: 0, scale: 0.9 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
           className="fixed bottom-6 left-6 right-6 z-50 flex justify-center"
         >
-          <GlassCard className="!bg-maroon text-white w-full max-w-md flex items-center justify-between p-4 shadow-2xl shadow-maroon/40 border-maroon-light">
-            <div className="flex items-center gap-3">
-              <div className="bg-white/20 p-2 rounded-full">
-                <ShoppingBag className="w-5 h-5" />
+          <div className="bg-glass-fill backdrop-blur-[40px] saturate-[1.5] border border-glass-border w-full max-w-md flex items-center justify-between p-4 rounded-3xl shadow-[0_20px_40px_-10px_rgba(204,72,60,0.3)]">
+            <div className="flex items-center gap-4">
+              <div className="bg-gradient-to-br from-maroon-light to-maroon p-3 rounded-2xl shadow-[0_10px_20px_-10px_rgba(204,72,60,0.5)] text-white">
+                <ShoppingBag className="w-6 h-6 drop-shadow-md" />
               </div>
               <div>
-                <p className="text-sm text-white/80">{cartItems.reduce((acc, i) => acc + i.quantity, 0)} items</p>
-                <p className="font-bold">₹{total}</p>
+                <p className="text-sm font-bold text-text-muted">{cartItems.reduce((acc, i) => acc + i.quantity, 0)} items</p>
+                <p className="font-bold text-xl text-text-dark">₹{total}</p>
               </div>
             </div>
-            <Button variant="secondary" className="!bg-white !text-maroon border-none hover:!bg-bg-cream" onClick={() => navigate('/checkout')}>
+            <Button variant="primary" onClick={() => navigate('/checkout')} className="px-6 shadow-none hover:shadow-none bg-maroon text-white border-transparent">
               Checkout
             </Button>
-          </GlassCard>
+          </div>
         </motion.div>
       )}
     </div>

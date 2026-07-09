@@ -85,16 +85,16 @@ export const Login: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-bg-cream relative overflow-hidden">
         {/* Animated Background Gradients */}
-        <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-maroon-light/20 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-[#D9A441]/20 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '6s' }} />
+        <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-maroon-light/40 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-maroon/20 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '6s' }} />
         
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          className="w-full max-w-md bg-white/40 backdrop-blur-2xl border border-white/60 p-8 rounded-[32px] shadow-[0_20px_40px_-15px_rgba(144,53,61,0.15)] z-10 relative overflow-hidden text-center"
+          className="w-full max-w-md bg-glass-fill backdrop-blur-[40px] saturate-[1.5] border border-glass-border p-8 rounded-[32px] shadow-[0_20px_40px_-15px_rgba(204,72,60,0.15)] z-10 relative overflow-hidden text-center"
         >
-          <div className="w-20 h-20 bg-gradient-to-br from-[#D9A441] to-maroon rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-maroon/20 rotate-3">
-            <Sparkles className="w-10 h-10 text-white" />
+          <div className="w-20 h-20 bg-gradient-to-br from-maroon-light to-maroon rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_10px_20px_-10px_rgba(204,72,60,0.5)] rotate-3">
+            <Sparkles className="w-10 h-10 text-white drop-shadow-md" />
           </div>
           
           <h1 className="text-3xl font-bold mb-2 text-text-dark font-heading">Claim Kiosk</h1>
@@ -122,7 +122,7 @@ export const Login: React.FC = () => {
           rotate: [0, 90, 0]
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-gradient-to-br from-maroon/10 to-transparent rounded-full blur-[100px]" 
+        className="absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-gradient-to-br from-maroon-light/30 to-transparent rounded-full blur-[120px]" 
       />
       <motion.div 
         animate={{ 
@@ -130,7 +130,7 @@ export const Login: React.FC = () => {
           rotate: [0, -90, 0]
         }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-gradient-to-tr from-[#D9A441]/10 to-transparent rounded-full blur-[100px]" 
+        className="absolute bottom-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-gradient-to-tr from-maroon/20 to-transparent rounded-full blur-[120px]" 
       />
       
       <div className="w-full max-w-[1000px] grid md:grid-cols-2 gap-8 items-center z-10">
@@ -142,15 +142,15 @@ export const Login: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="w-24 h-24 bg-gradient-to-br from-maroon to-maroon-dark rounded-3xl flex items-center justify-center mb-8 shadow-2xl shadow-maroon/30 -rotate-6">
-              <Coffee className="w-12 h-12 text-white" />
+            <div className="w-24 h-24 bg-gradient-to-br from-maroon-light to-maroon rounded-3xl flex items-center justify-center mb-8 shadow-[0_20px_40px_-10px_rgba(204,72,60,0.4)] -rotate-6">
+              <Coffee className="w-12 h-12 text-white drop-shadow-md" />
             </div>
-            <h1 className="text-6xl font-bold mb-6 text-text-dark font-heading leading-tight">
-              Liquid Glass <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-maroon to-[#D9A441]">on Latte.</span>
+            <h1 className="text-6xl font-bold mb-6 text-text-dark font-heading leading-tight drop-shadow-sm">
+              Spatial UI <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-maroon to-maroon-light">on Latte.</span>
             </h1>
             <p className="text-xl text-text-muted leading-relaxed max-w-md">
-              Skip the line, order ahead, and track your caffeine levels with the smartest kiosk on campus.
+              Skip the line, order ahead, and experience fluid design with the smartest kiosk on campus.
             </p>
           </motion.div>
         </div>
@@ -162,17 +162,17 @@ export const Login: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="w-full max-w-md mx-auto"
         >
-          <div className="bg-white/40 backdrop-blur-2xl border border-white/60 p-8 sm:p-10 rounded-[32px] shadow-[0_20px_40px_-15px_rgba(144,53,61,0.15)] relative overflow-hidden">
+          <div className="bg-glass-fill backdrop-blur-[40px] saturate-[1.5] border border-glass-border p-8 sm:p-10 rounded-[32px] shadow-[0_30px_60px_-15px_rgba(204,72,60,0.15)] relative overflow-hidden">
             {/* Inner highlights for liquid glass effect */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-50" />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent opacity-20 pointer-events-none rounded-[32px]" />
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-30 pointer-events-none rounded-[32px]" />
             
             {/* Mobile Branding */}
             <div className="md:hidden flex flex-col items-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-maroon to-maroon-dark rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-maroon/30">
-                <Coffee className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 bg-gradient-to-br from-maroon-light to-maroon rounded-2xl flex items-center justify-center mb-4 shadow-[0_10px_20px_-10px_rgba(204,72,60,0.5)]">
+                <Coffee className="w-8 h-8 text-white drop-shadow-md" />
               </div>
-              <h2 className="text-3xl font-bold font-heading">CafeQ</h2>
+              <h2 className="text-3xl font-bold font-heading text-text-dark drop-shadow-sm">CafeQ</h2>
             </div>
 
             <div className="flex gap-4 mb-8 bg-black/5 p-1.5 rounded-2xl relative z-10">
@@ -259,7 +259,7 @@ export const Login: React.FC = () => {
                 <button 
                   type="button"
                   onClick={handleGoogleLogin} 
-                  className="w-full bg-white border border-glass-border hover:border-maroon/30 hover:bg-white/90 text-text-dark font-medium py-4 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm"
+                  className="w-full bg-glass-fill backdrop-blur-[20px] border border-glass-border hover:border-maroon/50 hover:shadow-[0_10px_20px_-10px_rgba(204,72,60,0.2)] text-text-dark font-medium py-4 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm relative z-10 hover:-translate-y-0.5"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />

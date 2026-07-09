@@ -13,9 +13,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', className, children, ...props }, ref) => {
     
     const variants = {
-      primary: 'bg-maroon text-white hover:bg-maroon-light shadow-md shadow-maroon/20 border border-maroon-light/50',
-      secondary: 'bg-white/50 text-text-dark border border-glass-border hover:bg-white',
-      danger: 'bg-status-jammed text-white hover:bg-red-600 shadow-md shadow-red-500/20',
+      primary: 'bg-maroon text-white hover:bg-maroon-light shadow-[0_10px_20px_-10px_rgba(204,72,60,0.5)] border border-maroon-light/30',
+      secondary: 'bg-glass-fill text-text-dark border border-glass-border hover:bg-white backdrop-blur-[20px]',
+      danger: 'bg-status-jammed text-white hover:bg-red-500 shadow-[0_10px_20px_-10px_rgba(248,113,113,0.5)]',
       ghost: 'bg-transparent text-text-dark hover:bg-black/5'
     };
 
@@ -28,8 +28,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <motion.button
         ref={ref}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.02, y: -2 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className={cn(
           'relative overflow-hidden rounded-xl transition-all duration-300',
           variants[variant],
@@ -38,9 +39,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...props}
       >
-        <span className="relative z-10">{children}</span>
+        <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
         {variant === 'primary' && (
-          <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[150%] hover:animate-[shimmer_1.5s_infinite]" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] hover:animate-[shimmer_1.5s_infinite]" />
         )}
       </motion.button>
     );
