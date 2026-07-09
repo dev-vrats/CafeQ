@@ -5,7 +5,7 @@ import { doc, onSnapshot, collection, query, where } from 'firebase/firestore';
 import { GlassCard } from '../components/GlassCard';
 import { BentoGrid, BentoItem } from '../components/BentoGrid';
 import { useNavigate } from 'react-router-dom';
-import { Coffee, Flame, Droplets, ChevronRight, Zap, LogOut, Package } from 'lucide-react';
+import { Coffee, Flame, Droplets, ChevronRight, Zap, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../components/Button';
 

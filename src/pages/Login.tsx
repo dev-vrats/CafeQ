@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { signInWithPopup, googleProvider, auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../firebase';
+import { auth, googleProvider } from '../firebase';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/Button';
-import { Coffee, Mail, Lock, User, ArrowRight, Sparkles, LogIn, UserPlus } from 'lucide-react';
+import { Coffee, Mail, Lock, ArrowRight, Sparkles, LogIn, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const Login: React.FC = () => {
