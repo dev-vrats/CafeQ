@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 export interface UserProfile {
@@ -58,17 +58,22 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
     
     checkOwnerStatus();
 
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    let profileUnsub: (() => void) | undefined;
+
+    const authUnsub = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      if (profileUnsub) {
+        profileUnsub();
+        profileUnsub = undefined;
+      }
+
       if (currentUser) {
         try {
           const userRef = doc(db, 'users', currentUser.uid);
           const userSnap = await getDoc(userRef);
           
-          if (userSnap.exists()) {
-            setProfile(userSnap.data() as UserProfile);
-          } else {
-            // Create default student profile
+          if (!userSnap.exists()) {
+            // Create default profile
             const newProfile: UserProfile = {
               uid: currentUser.uid,
               role: 'none',
@@ -79,8 +84,13 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
               khata: { due: 0 }
             };
             await setDoc(userRef, newProfile);
-            setProfile(newProfile);
           }
+
+          profileUnsub = onSnapshot(userRef, (snap) => {
+            if (snap.exists()) {
+              setProfile(snap.data() as UserProfile);
+            }
+          });
         } catch (error) {
           console.error("Error setting up user profile:", error);
         }
@@ -90,7 +100,10 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      authUnsub();
+      if (profileUnsub) profileUnsub();
+    };
   }, []);
 
   const claimOwner = async () => {
