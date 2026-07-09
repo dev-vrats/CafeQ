@@ -28,14 +28,15 @@ export const OwnerDashboard: React.FC = () => {
     return () => { unsubOrders(); unsubMenu(); unsubRush(); };
   }, []);
 
-  const advanceOrderStatus = async (orderId: string, currentStatus: string, studentUid?: string) => {
+  const advanceOrderStatus = async (order: any) => {
     const flow = { 'new': 'accepted', 'accepted': 'preparing', 'preparing': 'ready', 'ready': 'pickedUp' };
-    const nextStatus = (flow as any)[currentStatus];
+    const nextStatus = (flow as any)[order.status];
     if (nextStatus) {
-      await updateDoc(doc(db, 'orders', orderId), { status: nextStatus });
-      if (nextStatus === 'pickedUp' && studentUid) {
-        await updateDoc(doc(db, 'users', studentUid), {
-          'loyalty.coffee': increment(1)
+      await updateDoc(doc(db, 'orders', order.id), { status: nextStatus });
+      if (nextStatus === 'pickedUp' && order.studentUid) {
+        const totalItems = order.items.reduce((sum: number, item: any) => sum + item.qty, 0);
+        await updateDoc(doc(db, 'users', order.studentUid), {
+          'loyalty.coffee': increment(totalItems)
         });
       }
     }
@@ -124,7 +125,7 @@ export const OwnerDashboard: React.FC = () => {
                           size="sm" 
                           variant={statusColumn === 'new' ? 'primary' : 'secondary'}
                           className={`w-full text-xs ${statusColumn !== 'new' && 'border-maroon/30 text-maroon hover:bg-maroon-light/20'}`}
-                          onClick={() => advanceOrderStatus(order.id, order.status, order.studentUid)}
+                          onClick={() => advanceOrderStatus(order)}
                         >
                           {order.status === 'new' ? 'Accept' : order.status === 'accepted' ? 'Start Preparing' : order.status === 'preparing' ? 'Mark Ready' : 'Mark Picked Up'}
                         </Button>
