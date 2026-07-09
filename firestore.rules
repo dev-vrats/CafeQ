@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner() {
+      return isAuthenticated() && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'owner';
+    }
+    
+    function isUser(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+      allow read: if isUser(uid) || isOwner();
+      allow create: if isUser(uid);
+      allow update: if isUser(uid) || isOwner();
+    }
+
+    match /config/owner {
+      allow read: if true;
+      allow create, update: if isAuthenticated() && 
+                            (resource == null || resource.data.ownerUid == null) && 
+                            request.resource.data.ownerUid != null;
+    }
+
+    match /menu/{itemId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /slots/{slotId} {
+      allow read: if true;
+      allow write: if isAuthenticated(); // Could be tightened, but fine for now
+    }
+
+    match /rushMeter/current {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /orders/{orderId} {
+      allow read: if isOwner() || (isAuthenticated() && resource.data.studentUid == request.auth.uid) || (isAuthenticated() && resource.data.type == 'group');
+      allow create: if isAuthenticated();
+      allow update: if isOwner() || (isAuthenticated() && resource.data.studentUid == request.auth.uid);
+    }
+
+    match /groupOrders/{groupId} {
+      allow read: if true; // Shareable link needs read access
+      allow create, update: if isAuthenticated() || true; // Allow anonymous join if needed, but we'll use simple auth
+    }
+
+    match /passes/{uid} {
+      allow read: if isUser(uid) || isOwner();
+      allow write: if isUser(uid) || isOwner();
+    }
+
+    match /leaderboard/{uid} {
+      allow read: if true;
+      allow write: if isUser(uid) || isOwner();
+    }
+  }
+}

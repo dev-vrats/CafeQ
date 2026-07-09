@@ -1,0 +1,58 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+}
+@import "tailwindcss";
+
+@theme {
+  --color-maroon: #90353D;
+  --color-maroon-dark: #6E2830;
+  --color-maroon-light: #A9525A;
+  --color-bg-cream: #1F1F23;
+  --color-glass-fill: rgba(40, 40, 45, 0.5);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-fill-dark: rgba(20, 20, 25, 0.6);
+  --color-text-dark: #F4F4F5;
+  --color-text-muted: #A1A1AA;
+  --color-text-on-maroon: #F8ECE9;
+  --color-status-relaxed: #7A9E7E;
+  --color-status-busy: #D9A441;
+  --color-status-jammed: #90353D;
+
+  --font-sans: 'Manrope', sans-serif;
+  --font-heading: 'Fraunces', serif;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-cream text-text-dark font-sans antialiased selection:bg-maroon selection:text-white;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-glass-fill backdrop-blur-[18px] border border-glass-border shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] rounded-[24px];
+  }
+  
+  .glass-panel-dark {
+    @apply bg-glass-fill-dark backdrop-blur-[18px] border border-glass-border shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] rounded-[24px];
+  }
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
