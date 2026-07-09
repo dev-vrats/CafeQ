@@ -6,7 +6,7 @@ import { auth, db } from '../firebase';
 
 export interface UserProfile {
   uid: string;
-  role: 'student' | 'owner';
+  role: 'student' | 'owner' | 'none';
   name: string | null;
   phone: string | null;
   photoUrl: string | null;
@@ -20,6 +20,7 @@ interface AuthContextType {
   profile: UserProfile | null;
   loading: boolean;
   claimOwner: () => Promise<void>;
+  claimStudent: () => Promise<void>;
   ownerClaimAvailable: boolean;
 }
 
@@ -28,6 +29,7 @@ const AuthContext = createContext<AuthContextType>({
   profile: null,
   loading: true,
   claimOwner: async () => {},
+  claimStudent: async () => {},
   ownerClaimAvailable: false
 });
 
@@ -69,7 +71,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
             // Create default student profile
             const newProfile: UserProfile = {
               uid: currentUser.uid,
-              role: 'student',
+              role: 'none',
               name: currentUser.displayName || '',
               phone: currentUser.phoneNumber || '',
               photoUrl: currentUser.photoURL || '',
@@ -106,8 +108,18 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
     }
   };
 
+  const claimStudent = async () => {
+    if (!user || !profile) return;
+    try {
+      await setDoc(doc(db, 'users', user.uid), { role: 'student' }, { merge: true });
+      setProfile({ ...profile, role: 'student' });
+    } catch (e) {
+      console.error("Failed to set student role", e);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, profile, loading, claimOwner, ownerClaimAvailable }}>
+    <AuthContext.Provider value={{ user, profile, loading, claimOwner, claimStudent, ownerClaimAvailable }}>
       {children}
     </AuthContext.Provider>
   );

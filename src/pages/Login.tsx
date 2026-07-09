@@ -8,27 +8,24 @@ import { Coffee, Mail, Lock, ArrowRight, Sparkles, LogIn, UserPlus } from 'lucid
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const Login: React.FC = () => {
-  const { user, profile, loading, ownerClaimAvailable, claimOwner } = useAuth();
+  const { user, profile, loading, claimOwner, claimStudent } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, setError] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [continuingAsStudent, setContinuingAsStudent] = useState(false);
 
   if (loading) return null;
 
-  // Intercept the redirect if owner claim is available and they haven't explicitly chosen to continue as student
-  if (user && profile && !continuingAsStudent) {
-    if (ownerClaimAvailable && profile.role !== 'owner') {
+  // Intercept the redirect if owner claim is available
+  if (user && profile) {
+    if (profile.role === 'none') {
       // Don't redirect yet! Render the claim screen below.
     } else {
       if (profile.role === 'owner') return <Navigate to="/owner" replace />;
       return <Navigate to="/home" replace />;
     }
-  } else if (user && profile && continuingAsStudent) {
-    return <Navigate to="/home" replace />;
   }
 
   const handleGoogleLogin = async () => {
@@ -62,7 +59,7 @@ export const Login: React.FC = () => {
         const { db } = await import('../firebase');
         await setDoc(doc(db, 'users', cred.user.uid), {
           uid: cred.user.uid,
-          role: 'student',
+          role: 'none',
           name: name.trim(),
           phone: '',
           photoUrl: '',
@@ -80,8 +77,8 @@ export const Login: React.FC = () => {
     }
   };
 
-  // If user is authenticated and owner claim is available, show the claim screen
-  if (user && profile && ownerClaimAvailable && profile.role !== 'owner') {
+  // If user is authenticated and hasn't selected a role, show the role selection screen
+  if (user && profile && profile.role === 'none') {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 bg-bg-cream relative overflow-hidden">
         {/* Animated Background Gradients */}
@@ -97,15 +94,15 @@ export const Login: React.FC = () => {
             <Sparkles className="w-10 h-10 text-white drop-shadow-md" />
           </div>
           
-          <h1 className="text-3xl font-bold mb-2 text-text-dark font-heading">Claim Kiosk</h1>
-          <p className="text-text-muted mb-8">It looks like this CafeQ instance doesn't have an owner yet. Are you the owner?</p>
+          <h1 className="text-3xl font-bold mb-2 text-text-dark font-heading">Choose Your Role</h1>
+          <p className="text-text-muted mb-8">How would you like to experience CafeQ today?</p>
 
           <div className="space-y-4">
-            <Button onClick={claimOwner} className="w-full h-14 text-lg">
-              Yes, I run this Kiosk
+            <Button onClick={claimStudent} className="w-full h-14 text-lg bg-white text-maroon border-transparent hover:bg-bg-cream shadow-sm">
+              I am a Student
             </Button>
-            <Button variant="ghost" onClick={() => setContinuingAsStudent(true)} className="w-full h-12">
-              No, I'm just a student
+            <Button onClick={claimOwner} className="w-full h-14 text-lg">
+              I am the Cafe Owner
             </Button>
           </div>
         </motion.div>
