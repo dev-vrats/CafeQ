@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export const Login: React.FC = () => {
   const { user, profile, loading, ownerClaimAvailable, claimOwner } = useAuth();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
@@ -45,12 +46,29 @@ export const Login: React.FC = () => {
       setError("Please enter both email and password.");
       return;
     }
+    if (isRegistering && !name.trim()) {
+      setError("Please enter your name.");
+      return;
+    }
     setError('');
     setIsProcessing(true);
     
     try {
       if (isRegistering) {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const { updateProfile } = await import('firebase/auth');
+        await updateProfile(cred.user, { displayName: name.trim() });
+        const { setDoc, doc } = await import('firebase/firestore');
+        const { db } = await import('../firebase');
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          uid: cred.user.uid,
+          role: 'student',
+          name: name.trim(),
+          phone: '',
+          photoUrl: '',
+          loyalty: { coffee: 0 },
+          khata: { due: 0 }
+        }, { merge: true });
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
@@ -189,6 +207,18 @@ export const Login: React.FC = () => {
                 )}
 
                 <form onSubmit={handleEmailAuth} className="space-y-4 mb-6">
+                  {isRegistering && (
+                    <div className="relative">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                      <input
+                        type="text"
+                        placeholder="Your Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full bg-white/50 border border-glass-border pl-12 pr-4 py-4 rounded-2xl focus:outline-none focus:border-maroon focus:bg-white transition-all duration-300 placeholder:text-text-muted/60"
+                      />
+                    </div>
+                  )}
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                     <input

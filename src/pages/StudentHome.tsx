@@ -72,6 +72,13 @@ export const StudentHome: React.FC = () => {
     }
   };
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning,';
+    if (hour < 17) return 'Good afternoon,';
+    return 'Good evening,';
+  };
+
   return (
     <div className="min-h-screen p-6 pb-24 relative overflow-hidden">
       {/* Background Ambience */}
@@ -80,7 +87,7 @@ export const StudentHome: React.FC = () => {
 
       <header className="flex justify-between items-center mb-10 mt-4">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-          <p className="text-sm text-text-muted font-medium mb-1">Good to see you,</p>
+          <p className="text-sm text-text-muted font-medium mb-1">{getGreeting()}</p>
           <h1 className="text-4xl font-bold font-heading text-maroon-dark">{profile?.name?.split(' ')[0] || 'Student'}</h1>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-3">

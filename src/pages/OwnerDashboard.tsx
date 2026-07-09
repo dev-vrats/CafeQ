@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
 import { signOut, auth, db } from '../firebase';
-import { collection, doc, onSnapshot, query, orderBy, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, onSnapshot, query, orderBy, setDoc, updateDoc, increment } from 'firebase/firestore';
 import { GlassCard } from '../components/GlassCard';
 import { BentoGrid, BentoItem } from '../components/BentoGrid';
 import { LogOut, Coffee, Flame, Zap } from 'lucide-react';
@@ -28,11 +28,16 @@ export const OwnerDashboard: React.FC = () => {
     return () => { unsubOrders(); unsubMenu(); unsubRush(); };
   }, []);
 
-  const advanceOrderStatus = async (orderId: string, currentStatus: string) => {
+  const advanceOrderStatus = async (orderId: string, currentStatus: string, studentUid?: string) => {
     const flow = { 'new': 'accepted', 'accepted': 'preparing', 'preparing': 'ready', 'ready': 'pickedUp' };
     const nextStatus = (flow as any)[currentStatus];
     if (nextStatus) {
       await updateDoc(doc(db, 'orders', orderId), { status: nextStatus });
+      if (nextStatus === 'pickedUp' && studentUid) {
+        await updateDoc(doc(db, 'users', studentUid), {
+          'loyalty.coffee': increment(1)
+        });
+      }
     }
   };
 
@@ -114,7 +119,7 @@ export const OwnerDashboard: React.FC = () => {
                         <Button 
                           size="sm" 
                           className="w-full text-xs"
-                          onClick={() => advanceOrderStatus(order.id, order.status)}
+                          onClick={() => advanceOrderStatus(order.id, order.status, order.studentUid)}
                         >
                           {order.status === 'new' ? 'Accept' : order.status === 'accepted' ? 'Start Preparing' : order.status === 'preparing' ? 'Mark Ready' : 'Mark Picked Up'}
                         </Button>
