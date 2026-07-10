@@ -19,13 +19,13 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
       <motion.div
         ref={ref}
         className={cn(
-          variant === 'light' ? 'glass-panel' : 'glass-panel-dark',
-          interactive && 'cursor-pointer hover:shadow-[0_20px_60px_-15px_rgba(204,72,60,0.3)] transition-shadow duration-500',
+          variant === 'light' ? 'skeuo-panel' : 'skeuo-panel-dark',
+          interactive && 'cursor-pointer hover:shadow-[0_15px_30px_-5px_rgba(30,3,3,0.3)] transition-shadow duration-300',
           className
         )}
-        whileHover={interactive ? { y: -8, scale: 1.02 } : undefined}
-        whileTap={interactive ? { scale: 0.95 } : undefined}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        whileHover={interactive ? { y: -2, scale: 1.01 } : undefined}
+        whileTap={interactive ? { scale: 0.98 } : undefined}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
         {...props}
       >
         {children}
