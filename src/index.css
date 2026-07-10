@@ -24,16 +24,16 @@
   body {
     @apply bg-bg-paper text-text-dark font-sans antialiased selection:bg-cafe-gold selection:text-cafe-dark;
     background-color: #1e0303;
-    background-image: url('/bg-portrait.png');
+    background-image: url('/bgm.png');
     background-size: cover;
-    background-position: center bottom;
-    background-attachment: fixed;
+    background-position: center top;
     background-repeat: no-repeat;
+    background-attachment: fixed;
   }
   
   @media (min-width: 768px) {
     body {
-      background-image: url('/bg-landscape.png');
+      background-image: url('/bgl.png');
       background-position: center center;
     }
   }
