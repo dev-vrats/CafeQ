@@ -19,69 +19,71 @@ function AppContent() {
   const { profile } = useAuth();
   return (
     <>
-      <main className="pt-32 pb-16 px-4 sm:px-6 max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl mr-auto flex-grow relative z-10">
-        <Routes>
-          <Route path="/" element={<Login />} />
-          
-          {/* Student Routes */}
-          <Route path="/home" element={
-            <ProtectedRoute>
-              <StudentHome />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/menu" element={
-            <ProtectedRoute>
-              <Menu />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/checkout" element={
-            <ProtectedRoute>
-              <Checkout />
-            </ProtectedRoute>
-          } />
+      <main className="pt-36 pb-16 px-6 mx-auto w-full max-w-7xl md:pr-[45%] lg:pr-[50%] flex-grow relative z-10 flex flex-col items-center md:items-start">
+        <div className="w-full max-w-lg md:max-w-xl">
+          <Routes>
+            <Route path="/" element={<Login />} />
+            
+            {/* Student Routes */}
+            <Route path="/home" element={
+              <ProtectedRoute>
+                <StudentHome />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/menu" element={
+              <ProtectedRoute>
+                <Menu />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            } />
 
-          <Route path="/order/:orderId" element={
-            <ProtectedRoute>
-              <OrderTracking />
-            </ProtectedRoute>
-          } />
+            <Route path="/order/:orderId" element={
+              <ProtectedRoute>
+                <OrderTracking />
+              </ProtectedRoute>
+            } />
 
-          <Route path="/game" element={
-            <ProtectedRoute>
-              <Game />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/loyalty" element={
-            <ProtectedRoute>
-              <Loyalty />
-            </ProtectedRoute>
-          } />
+            <Route path="/game" element={
+              <ProtectedRoute>
+                <Game />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/loyalty" element={
+              <ProtectedRoute>
+                <Loyalty />
+              </ProtectedRoute>
+            } />
 
-          <Route path="/pass" element={
-            <ProtectedRoute>
-              <Pass />
-            </ProtectedRoute>
-          } />
+            <Route path="/pass" element={
+              <ProtectedRoute>
+                <Pass />
+              </ProtectedRoute>
+            } />
 
-          <Route path="/group-orders" element={
-            <ProtectedRoute>
-              <GroupOrders />
-            </ProtectedRoute>
-          } />
+            <Route path="/group-orders" element={
+              <ProtectedRoute>
+                <GroupOrders />
+              </ProtectedRoute>
+            } />
 
-          {/* Owner Routes */}
-          <Route path="/owner" element={
-            <ProtectedRoute requireOwner>
-              <OwnerDashboard />
-            </ProtectedRoute>
-          } />
+            {/* Owner Routes */}
+            <Route path="/owner" element={
+              <ProtectedRoute requireOwner>
+                <OwnerDashboard />
+              </ProtectedRoute>
+            } />
 
-          {/* Catch all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+            {/* Catch all */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
       </main>
       
       {profile?.role === 'student' && <Chatbot />}

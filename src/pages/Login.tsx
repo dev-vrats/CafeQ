@@ -80,15 +80,13 @@ export const Login: React.FC = () => {
   // If user is authenticated and hasn't selected a role, show the role selection screen
   if (user && profile && profile.role === 'none') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-bg-cream relative overflow-hidden">
-        {/* Animated Background Gradients */}
-        <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-maroon-light/40 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-maroon/20 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '6s' }} />
+      <div className="min-h-screen flex items-center justify-center p-6 bg-transparent relative overflow-hidden">
+        {/* Removed orbs */}
         
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          className="w-full max-w-md bg-glass-fill backdrop-blur-[40px] saturate-[1.5] border border-glass-border p-8 rounded-[32px] shadow-[0_20px_40px_-15px_rgba(204,72,60,0.15)] z-10 relative overflow-hidden text-center"
+          className="w-full max-w-md skeuo-panel p-8 z-10 relative overflow-hidden text-center"
         >
           <div className="w-20 h-20 bg-gradient-to-br from-maroon-light to-maroon rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_10px_20px_-10px_rgba(204,72,60,0.5)] rotate-3">
             <Sparkles className="w-10 h-10 text-white drop-shadow-md" />
@@ -111,24 +109,8 @@ export const Login: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-bg-cream relative overflow-hidden">
-      {/* Liquid Glass Background Elements */}
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.1, 1],
-          rotate: [0, 90, 0]
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-gradient-to-br from-maroon-light/30 to-transparent rounded-full blur-[120px]" 
-      />
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.2, 1],
-          rotate: [0, -90, 0]
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-gradient-to-tr from-maroon/20 to-transparent rounded-full blur-[120px]" 
-      />
+    <div className="min-h-screen flex items-center justify-center p-6 bg-transparent relative overflow-hidden">
+      {/* Removed orbs */}
       
       <div className="w-full max-w-[1000px] grid md:grid-cols-2 gap-8 items-center z-10">
         
@@ -159,10 +141,8 @@ export const Login: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="w-full max-w-md mx-auto"
         >
-          <div className="bg-glass-fill backdrop-blur-[40px] saturate-[1.5] border border-glass-border p-8 sm:p-10 rounded-[32px] shadow-[0_30px_60px_-15px_rgba(204,72,60,0.15)] relative overflow-hidden">
-            {/* Inner highlights for liquid glass effect */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-100" />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-30 pointer-events-none rounded-[32px]" />
+          <div className="skeuo-panel p-8 sm:p-10 relative overflow-hidden">
+            {/* Inner highlights */}
             
             {/* Mobile Branding */}
             <div className="md:hidden flex flex-col items-center mb-8">
@@ -212,7 +192,7 @@ export const Login: React.FC = () => {
                         placeholder="Your Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full bg-white/50 border border-glass-border pl-12 pr-4 py-4 rounded-2xl focus:outline-none focus:border-maroon focus:bg-white transition-all duration-300 placeholder:text-text-muted/60"
+                        className="w-full bg-[rgba(18,1,1,0.5)] border border-[#5c5547] text-[#f4f0eb] pl-12 pr-4 py-4 rounded-2xl focus:outline-none focus:border-[#8d856c] transition-all duration-300 placeholder:text-[#a9a187]"
                       />
                     </div>
                   )}
@@ -223,7 +203,7 @@ export const Login: React.FC = () => {
                       placeholder="Email address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-white/50 border border-glass-border pl-12 pr-4 py-4 rounded-2xl focus:outline-none focus:border-maroon focus:bg-white transition-all duration-300 placeholder:text-text-muted/60"
+                      className="w-full bg-[rgba(18,1,1,0.5)] border border-[#5c5547] text-[#f4f0eb] pl-12 pr-4 py-4 rounded-2xl focus:outline-none focus:border-[#8d856c] transition-all duration-300 placeholder:text-[#a9a187]"
                     />
                   </div>
                   <div className="relative">
@@ -233,7 +213,7 @@ export const Login: React.FC = () => {
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/50 border border-glass-border pl-12 pr-4 py-4 rounded-2xl focus:outline-none focus:border-maroon focus:bg-white transition-all duration-300 placeholder:text-text-muted/60"
+                      className="w-full bg-[rgba(18,1,1,0.5)] border border-[#5c5547] text-[#f4f0eb] pl-12 pr-4 py-4 rounded-2xl focus:outline-none focus:border-[#8d856c] transition-all duration-300 placeholder:text-[#a9a187]"
                     />
                   </div>
                   
@@ -256,7 +236,7 @@ export const Login: React.FC = () => {
                 <button 
                   type="button"
                   onClick={handleGoogleLogin} 
-                  className="w-full bg-glass-fill backdrop-blur-[20px] border border-glass-border hover:border-maroon/50 hover:shadow-[0_10px_20px_-10px_rgba(204,72,60,0.2)] text-text-dark font-medium py-4 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm relative z-10 hover:-translate-y-0.5"
+                  className="w-full bg-[rgba(18,1,1,0.5)] border border-[#5c5547] hover:border-[#8d856c] text-[#f4f0eb] font-medium py-4 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm relative z-10 hover:-translate-y-0.5"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />

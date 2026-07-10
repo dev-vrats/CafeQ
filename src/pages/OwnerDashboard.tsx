@@ -78,9 +78,7 @@ export const OwnerDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen p-6 relative overflow-hidden">
-      {/* Background Ambience Spatial Orbs */}
-      <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-maroon-light/30 rounded-full blur-[120px] -z-10" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-maroon/20 rounded-full blur-[120px] -z-10" />
+      {/* Removed blurred orbs */}
 
       <header className="flex justify-between items-center mb-6 relative z-10">
         <h1 className="text-3xl font-bold text-text-dark font-heading drop-shadow-sm">Owner Dashboard</h1>

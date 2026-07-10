@@ -81,17 +81,7 @@ export const StudentHome: React.FC = () => {
 
   return (
     <div className="min-h-screen p-6 pb-24 relative overflow-hidden">
-      {/* Background Ambience Spatial Orbs */}
-      <motion.div 
-        animate={{ scale: [1, 1.1, 1], rotate: [0, 90, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-maroon-light/30 rounded-full blur-[100px] -z-10" 
-      />
-      <motion.div 
-        animate={{ scale: [1, 1.2, 1], rotate: [0, -90, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-20 left-[-10%] w-96 h-96 bg-maroon/20 rounded-full blur-[100px] -z-10" 
-      />
+      {/* Removed blurred orbs */}
 
       <header className="flex justify-between items-center mb-10 mt-4 relative z-10">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
